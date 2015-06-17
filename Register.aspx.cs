@@ -12,7 +12,9 @@ public partial class Register : System.Web.UI.Page
     {
 
     }
-
+    /// <summary>
+    /// Hiermaken we een nieuwe account aan in de databse als de boxes die ingevult moeten worden zijn gevalideerd.
+    /// </summary>
     protected void NewAccount()
     {
         DBC dbConnect = new DBC();
@@ -34,6 +36,11 @@ public partial class Register : System.Web.UI.Page
             dbConnect.NonQuery(sql);
         }
     }
+    /// <summary>
+    /// Hier roepen we de methode aan om de account toe te voegen aan de database.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     protected void btnRegister_Click(object sender, EventArgs e)
     {
         NewAccount();

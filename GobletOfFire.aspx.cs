@@ -9,7 +9,10 @@ using System.Data;
 
 public partial class GobletOfFire : System.Web.UI.Page
 {
-
+    /// <summary>
+    /// Hier laadt ik de Sessions die nodig zijn om de pagina te vullen met de juiste informatie uit de database.
+    /// </summary>
+    
     protected void Page_Load(object sender, EventArgs e)
     {
         MasterPage master = (MasterPage) this.Master;

@@ -48,7 +48,10 @@ public partial class MasterPage : System.Web.UI.MasterPage
         dbConnect.Close();
 
     }
-
+    /// <summary>
+    /// Hier halen we de titel op van een product en zetten hem in een session, hierdoor kunnen we de data op een andere pagina gebruiken.
+    /// </summary>
+    /// <param name="naam"></param> We geven de naam van het product mee.
     public void GetTitel(string naam)
     {
 
@@ -63,7 +66,10 @@ public partial class MasterPage : System.Web.UI.MasterPage
         dbConnect.Close();
     }
   
-
+    /// <summary>
+    /// Hier halen we de beschrijving op van een product en zetten hem in een session, hierdoor kunnen we de data op een andere pagina gebruiken. 
+    /// </summary>
+    /// <param name="naam"></param> We geven de naam van het product mee.
     public void GetBeschrijving( string naam)
     {
         DBC dbConnect = new DBC();
@@ -76,7 +82,10 @@ public partial class MasterPage : System.Web.UI.MasterPage
         }
         dbConnect.Close();
     }
-
+    /// <summary>
+    /// Hier halen we de prijs op van een product en zetten hem in een session, hierdoor kunnen we de data op een andere pagina gebruiken.
+    /// </summary>
+    /// <param name="naam"></param> We geven de naam van het product mee.
     public void GetPrijs(string naam)
     {
         DBC dbConnect = new DBC();
@@ -89,7 +98,10 @@ public partial class MasterPage : System.Web.UI.MasterPage
         }
         dbConnect.Close();
     }
-
+    /// <summary>
+    /// Hier halen we het aanbevolen product op en zetten hem in een session, hierdoor kunnen we de data op een andere pagina gebruiken.
+    /// </summary>
+    /// <param name="naam"></param> We geven de naam van het product mee.
     public void GetAanbevolen(string naam)
     {
         DBC dbConnect = new DBC();
@@ -124,19 +136,11 @@ public partial class MasterPage : System.Web.UI.MasterPage
         dbConnect.Close();
     }
 
-    public void AddToWinkelwagen(string naam)
-    {
-        DBC dbConnect = new DBC();
-        string sql = "Select * from Product where naam ='" + naam + "'";
-        OracleDataReader reader1 = dbConnect.Query(sql);
+ 
+    /// <summary>
+    /// Wanneer de zoek knop wordt ingedrukt gaan we op zoek naar de bijbehorende pagina, we controleren welke het is en sturen het door naar de juiste pagina.
+    /// </summary>
 
-        while (reader1.Read())
-        {
-            Session["AddProductWinkelwagen"] = Convert.ToString(reader1["naam"]);
-
-        }
-        dbConnect.Close();
-    }
     protected void btnZoek_Click1(object sender, EventArgs e)
     {
          string naam = tbZoek.Text;

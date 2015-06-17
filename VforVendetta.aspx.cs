@@ -7,6 +7,9 @@ using System.Web.UI.WebControls;
 
 public partial class VforVendetta : System.Web.UI.Page
 {
+    /// <summary>
+    /// Hier laadt ik de Sessions die nodig zijn om de pagina te vullen met de juiste informatie uit de database.
+    /// </summary>
     protected void Page_Load(object sender, EventArgs e)
     {
       

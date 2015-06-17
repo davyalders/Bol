@@ -10,13 +10,11 @@ using System.Web.UI.WebControls;
 using Oracle.DataAccess.Client;
 
 /// <summary>
-/// Summary description for DBC
+/// Dit is de klasse om de database connectie op te zetten, wanneer deze klasse word aangeroepen kan er gebruikt worden gemaakt van de local database.
 /// </summary>
 public class DBC
 {
-    public string Titel { get; set; }
-    public string Beschrijving { get; set; }
-    public string Prijs { get; set; }
+    
     private OracleConnection conn;
     private String user = "System";
     private String pw = "klabnupac098";
@@ -30,6 +28,10 @@ public class DBC
                                 "//localhost:1521/xe" + ";";
         CheckConnection();
 	}
+    /// <summary>
+    /// Hier controleren we of de connectie werkt
+    /// </summary>
+    /// Wanneer de connectie lukt, returned de methode true, anders false.
     public bool CheckConnection()
     {
         try
@@ -46,7 +48,11 @@ public class DBC
         }
         return true;
     }
-
+    /// <summary>
+    /// Deze methode is gemaakt als wrapper voor een SQL Query, dit voorkomt het vaak typen van deze code.
+    /// </summary>
+    /// <param name="q"></param> De Q variabele is een SQL command als string.
+    /// <returns></returns> De methode geeft DataReader terug, deze kan dan worden uitgelezen in de methode die hem aanroept.
     public OracleDataReader Query(String q)
     {
         try
@@ -63,6 +69,11 @@ public class DBC
         
 
     }
+    /// <summary>
+    /// Deze methode is gemaakt als wrapper voor SQL commands niet iets opvragen, maar een verandering maken aan de database. 
+    /// Het verschil met de bovenstaande is dat deze dus niets teruggeeft.
+    /// </summary>
+    /// <param name="q"></param> De Q variabele is een SQL command als string.
     public void NonQuery(String q)
     {
 
@@ -82,17 +93,26 @@ public class DBC
             conn.Close();
         }
     }
-
+    /// <summary>
+    /// Opent de connectie met de database.
+    /// </summary>
     public void Open()
     {
         conn.Open();
     }
-
+    /// <summary>
+    /// Sluit de connectie met de database
+    /// </summary>
     public void Close()
     {
         conn.Close();
     }
-
+    /// <summary>
+    /// Word waarschijnlijk niet gebruikt, het is een methode om een Adapter te krijgen in plaats van een reader.
+    /// Dit is een work in progress.
+    /// </summary>
+    /// <param name="q"></param>De Q variabele is een SQL command als string.
+    /// <returns></returns> Geeft een dataAdapter terug.
     public OracleDataAdapter OracleDA(string q)
     {
         OracleDataAdapter da = new OracleDataAdapter(q, conn);
