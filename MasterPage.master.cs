@@ -13,10 +13,12 @@ public partial class MasterPage : System.Web.UI.MasterPage
 {
     
     private DBC dbConnect;
+    private Winkelwagen winkelwagen;
 
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        winkelwagen = new Winkelwagen();
         dbConnect = new DBC();
         getMenu();
     }
@@ -157,5 +159,38 @@ public partial class MasterPage : System.Web.UI.MasterPage
             Response.Redirect("VforVendetta.aspx");
         }
     
+    }
+    protected void menuBar_MenuItemClick(object sender, MenuEventArgs e)
+    {
+
+    }
+    /// <summary>
+    /// Haalt de data van winkelwagen op uit de klasse winkelwagen en geeft hem door aan de web page.
+    /// </summary>
+    /// <returns></returns> Geeft een lijst terug van poducten als string.
+    public void GetWinkelWagen()
+    {
+        try
+        {
+            
+            Session["WinkelwagenList"] = winkelwagen.winkelwagens;
+
+        }
+        catch (Exception)
+        {       
+          Response.Write("Winkelwagen is leeg");
+      
+        }
+        
+    }
+    /// <summary>
+    /// Geeft aan de winkelwagan klasse door welk product moet worden toegevoegd aan de lijst.
+    /// </summary>
+    /// <param name="product"></param> Het product dat moet worden toegevoegd.
+    public void AddToWinkelwagen(string product)
+    {
+        List<string> winkelwagens = new List<string>();
+        winkelwagens.Add(product);
+        Session["WinkelwagenList"] = winkelwagens;
     }
 }

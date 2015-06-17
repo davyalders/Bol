@@ -118,4 +118,56 @@ public class DBC
         OracleDataAdapter da = new OracleDataAdapter(q, conn);
         return da;
     }
+    /// <summary>
+    /// Deze methode wordt gebruikt om een parameter toe te voegen zonder elke keer de code te hoeven typen.
+    /// </summary>
+    public static OracleParameter AddParameter(string parameterName, object value, OracleDbType dbType, int size)
+    {
+        OracleParameter param = new OracleParameter();
+        param.ParameterName = parameterName;
+        param.Value = value.ToString();
+        param.OracleDbType = dbType;
+        param.Size = size;
+        param.Direction = ParameterDirection.Input;
+        return param;
+
+    }
+    /// <summary>
+    /// Dit is een methode om een connectie te maken met de database, en daarna een stored procedure aan te roepen.
+    ///  De connectie moet worden aangemaakt omdat het een static methode is.
+    /// </summary>
+    public static DataTable ExecuteDTByProcedure(string procedurename, OracleParameter[] param)
+    {
+        String user = "System";
+        String pw = "klabnupac098";
+        OracleConnection conn = new OracleConnection("User Id=" + user + ";Password=" + pw + ";Data Source= " +
+                                "//localhost:1521/xe" + ";");
+        OracleCommand cmd = new OracleCommand();
+        cmd.Connection = conn;
+        cmd.CommandText = procedurename;
+        cmd.Parameters.AddRange(param);
+        cmd.CommandType = CommandType.StoredProcedure;
+        OracleDataAdapter adapter = new OracleDataAdapter(cmd);
+        DataTable dtTable = new DataTable();
+
+        try
+        {
+            adapter.Fill(dtTable);
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
+        finally
+        {
+            adapter.Dispose();
+            cmd.Parameters.Clear();
+            cmd.Dispose();
+            conn.Dispose();
+        }
+        return dtTable;
+
+
+    }
 }

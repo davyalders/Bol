@@ -31,9 +31,15 @@
         <asp:Button ID="btnZoek" runat="server" Text="Zoeken" OnClick="btnZoek_Click1" />
       
     </div>
-<h1></h1>
+
+    <div id ="cartimg">
+        <h1>
+   <a href="Winkelwagen.aspx">  <img src="App_Themes/Theme1/Image/shopping cart.png" alt="Home" /> </a>
+&nbsp;</h1>
+    </div>
+
        <div class="MenuBar">
-	<asp:Menu ID="menuBar" runat="server" Orientation="Horizontal" Width="100%">
+	<asp:Menu ID="menuBar" runat="server" Orientation="Horizontal" Width="100%" OnMenuItemClick="menuBar_MenuItemClick">
 		<DynamicHoverStyle CssClass="DynamicHover" />
 		<DynamicMenuItemStyle CssClass="DynamicMenuItem" />
 		<DynamicSelectedStyle CssClass="DynamicHover" />
