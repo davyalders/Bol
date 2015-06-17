@@ -5,16 +5,20 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
+/// <summary>
+/// Deze klasse wordt gebruikt om het inloggen te realiseren.
+/// </summary>
 public partial class Login : System.Web.UI.Page
 {
     /// <summary>
-    /// Deze klasse wordt gebruikt om het inloggen te realiseren.
+    /// De pagina controleerd de connectie wanneer deze wordt geladen.
     /// </summary>
+    /// <param name="sender">parameter s</param>
+    /// <param name="e">Parameter e</param>
     protected void Page_Load(object sender, EventArgs e)
     {
         DBC dbConnect = new DBC();
     
-        
         // test de database connectie
        if (dbConnect.CheckConnection())
         {
@@ -26,31 +30,34 @@ public partial class Login : System.Web.UI.Page
        }
     }
 
-  /// <summary>
-  /// Roept de login methode aan om in te loggen.
-  /// </summary>
+/// <summary>
+/// Roept de login methode aan om in te loggen.
+/// </summary>
+/// <param name="sender">parameter s</param>
+/// <param name="e">parameter e</param>
     protected void btnLogin_Click(object sender, EventArgs e)
     {
-        LogIn();
+        this.LogIn();
     }
+
     /// <summary>
-    /// Controleerd of de ingegeven boxes voldoen aan de validators, daarna wordt de username en password met elkaar vergeleken. 
+    /// Controleert of de  boxes voldoen aan de validators, daarna wordt de username en password met elkaar vergeleken. 
     /// Wanneer dit klopt wordt er verwezen naar de homepage.
-    /// </summary>
+    /// </summary> 
     protected void LogIn()
-    {
-        string password = "";
+    {   
         DBC dbConnect = new DBC();
-        if (IsValid)
+        if (this.IsValid)
         {
             if (tbUsername.Text != null)
             {
                 dbConnect.Query("Select password from Account where gebruikersnaam='" + tbUsername.Text + "'");
             }
+
             dbConnect.Close();
             if (tbPassword.Text != null)
             {
-                Session["Login"] = tbUsername.Text;
+                this.Session["Login"] = tbUsername.Text;
                 Response.Redirect("Default.aspx");
             }
         }

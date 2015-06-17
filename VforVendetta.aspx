@@ -16,6 +16,7 @@
     </div>
     <div id ="Prijs">
         <asp:Label ID="lbPrijs" runat="server" Text="Label"></asp:Label>
+        <asp:Button ID="btnAddToCart" runat="server" OnClick="btnAddToCart_Click" Text="Voeg toe aan winkelwagen" />
     </div>
     <div id ="Aanbevolen">
         <h4 id ="aanbevolenTitel">
