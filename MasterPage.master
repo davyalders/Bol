@@ -1,0 +1,53 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="MasterPage" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html>
+<head>
+     <asp:ContentPlaceHolder ID="Stylesheets" runat="server">
+         <link rel="stylesheet" href="App_Themes/theme1/styles.css" type="text/css" />
+    </asp:ContentPlaceHolder>
+     <asp:ContentPlaceHolder ID="StyleProducts" runat="server">
+         <link rel="stylesheet" href="App_Themes/theme1/products.css" type="text/css" />
+    </asp:ContentPlaceHolder
+         >
+    <title></title>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div id ="Account">
+    <ul>
+<li><a href="Login.aspx">Login</a></li>
+<li><a href="Register.aspx">Register</a></li>
+
+</ul>
+        </div>
+    <div id="HomePic">
+        <a href="Default.aspx"> <img src="App_Themes/Theme1/Image/Bolhome.jpg" alt="Home" /></a>      
+    </div>
+    <div id="Search">
+      
+        <asp:TextBox ID="tbZoek" runat="server"></asp:TextBox>
+        <asp:Button ID="btnZoek" runat="server" Text="Zoeken" OnClick="btnZoek_Click1" />
+      
+    </div>
+<h1></h1>
+       <div class="MenuBar">
+	<asp:Menu ID="menuBar" runat="server" Orientation="Horizontal" Width="100%">
+		<DynamicHoverStyle CssClass="DynamicHover" />
+		<DynamicMenuItemStyle CssClass="DynamicMenuItem" />
+		<DynamicSelectedStyle CssClass="DynamicHover" />
+
+		<StaticHoverStyle CssClass="staticHover" />
+		<StaticMenuItemStyle CssClass="StaticMenuItem" ItemSpacing="1px" />
+		<StaticSelectedStyle CssClass="staticHover" />
+	</asp:Menu>
+</div>
+
+<asp:ContentPlaceHolder id="CPH1" runat="server">
+</asp:ContentPlaceHolder>
+<asp:ContentPlaceHolder id="CPH2" runat="server">
+</asp:ContentPlaceHolder>
+    </form>
+</body>
+</html>

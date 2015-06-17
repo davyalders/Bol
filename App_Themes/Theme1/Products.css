@@ -1,0 +1,70 @@
+﻿@import url(http://fonts.googleapis.com/css?family=Lato:300,400,700);
+@charset "UTF-8";
+
+#ProductImg {
+position: absolute;
+left: 50%;
+top: 35%;
+text-align: Left;        
+
+height:265px;
+margin-left: -273px; /*half width*/
+margin-top: -132px; /*half height*/
+}
+
+#Beschrijving {
+position: absolute;
+left: 50%;
+top: 65%;
+text-align: left;
+width: 600px;
+
+height:265px;
+margin-left: -273px; /*half width*/
+margin-top: -132px; /*half height*/
+font-family: 'Lato', sans-serif;
+}
+
+#Titel {
+    color: #0000FF;
+    
+}
+#Prijs {
+position: absolute;
+left: 65%;
+top: 35%;
+text-align: left;
+width: 600px;
+
+height:265px;
+margin-left: -273px; /*half width*/
+margin-top: -132px; /*half height*/
+font-family: 'Lucida Handwriting', sans-serif;
+}
+
+#Aanbevolen {
+position: absolute;
+left: 50%;
+top: 85%;
+text-align: left;
+width: 600px;
+color: #dc143c;
+height:265px;
+margin-left: -273px; /*half width*/
+margin-top: -132px; /*half height*/
+font-family: 'Lato', sans-serif;
+}
+
+#Login {
+position: absolute;
+left: 50%;
+top: 35%;
+text-align: left;
+width: 600px;
+color: #dc143c;
+height:265px;
+margin-left: -273px; /*half width*/
+margin-top: -132px; /*half height*/
+font-family: 'Lato', sans-serif;
+}
+

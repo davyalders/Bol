@@ -1,0 +1,31 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using Oracle.DataAccess.Client;
+using System.Data;
+
+public partial class GobletOfFire : System.Web.UI.Page
+{
+
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        MasterPage master = (MasterPage) this.Master;
+        master.GetAanbevolen("Harry potter : The Goblet of Fire");
+        master.GetBeschrijving("Harry potter : The Goblet of Fire");
+        master.GetPrijs("Harry potter : The Goblet of Fire");
+        master.GetTitel("Harry potter : The Goblet of Fire");
+
+
+        lbTitel.Text = (string) Session["Titel"];
+        lbBeschrijving.Text = (string)Session["Beschrijving"];
+        lbPrijs.Text = "€ " + (string) Session["Prijs"];
+        lbAanbevolenTitel.Text = "Aanbevolen bij "+ (string)Session["Titel"] + ": ";
+        lbAanbevolenPrijs.Text =(string)Session["Titel2"] +  " € " + (string)Session["Prijs2"];
+    }
+
+    
+    
+}

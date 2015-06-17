@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<siteMap>
+  <siteMapNode title="Home" url="/Default.aspx">
+    <siteMapNode title="Login" url="/Account/Login.aspx">
+      <siteMapNode title="Register" url="/Account/Register.aspx"/>
+    </siteMapNode>
+  </siteMapNode>
+</siteMap>
