@@ -9,7 +9,8 @@ using System.Web;
 /// </summary>
 public class Administratie
 {
-    private DBC dbConnect = new DBC();
+    DBC dbConnect = new DBC();
+    public List<Categorie> CategorieList = new List<Categorie>(); 
 	public Administratie()
 	{
 		
@@ -19,4 +20,16 @@ public class Administratie
     {
         dbConnect.NewAccount(username, password, email);
     }
+
+    public void AddProduct(string naam, int prijs, int gewicht, string beschrijving, string categorie)
+    {
+        dbConnect.AddProduct(naam, prijs, gewicht,beschrijving,categorie);
+    }
+
+    public List<Categorie> GetCategories()
+    {
+        CategorieList = dbConnect.GetCategories();
+       return CategorieList;
+    }
+    
 }

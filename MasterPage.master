@@ -15,21 +15,23 @@
 </head>
 <body>
     <form id="form1" runat="server">
-    <div id ="Account">
+    <div id ="Account" runat="server">
     <ul class="lijstje">
 <li class="login"><a href="Login.aspx">Login</a></li>
 <li class ="login"><a href="Register.aspx">Register</a></li>
 
 </ul>
         </div>
+        <div id ="LoggedIn" runat="server">
+            <asp:Button CssClass="btnLogout" runat="server" OnClick="Button1_Click" Text="Verkoop Item" />
+          <asp:Button CssClass="btnLogout" runat="server" Text="Log out" OnClick="btnLogout_Click" />
+        </div>
     <div id="HomePic">
         <a href="Default.aspx"> <img src="App_Themes/Theme1/Image/Bolhome.jpg" alt="Home" /></a>      
     </div>
-    <div id="Search">
-      
+    <div id="Search">   
         <asp:TextBox ID="tbZoek" runat="server"></asp:TextBox>
-        <asp:Button ID="btnZoek" runat="server" Text="Zoeken" OnClick="btnZoek_Click1" />
-      
+        <asp:Button ID="btnZoek" runat="server" Text="Zoeken" OnClick="btnZoek_Click1" />      
     </div>
 
     <div id ="cartimg">

@@ -33,8 +33,7 @@ public partial class Login : System.Web.UI.Page
     protected void LogIn()
     {
         if (this.IsValid)
-        {
-           
+        {   
             string username = tbUsername.Text;
             string password = tbPassword.Text;
             dbConnect.LogIn(username, password);
@@ -42,6 +41,11 @@ public partial class Login : System.Web.UI.Page
             {
                 this.Session["Login"] = tbUsername.Text;
                 Response.Redirect("Default.aspx");
+
+                if (Session["Login"] != null)
+                {
+                    Response.Write("Login succesful");
+                }
             }
         }
     }

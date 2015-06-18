@@ -9,26 +9,25 @@ using Oracle.DataAccess.Client;
 /// </summary>
 public class Winkelwagen
 {
-  
+    private object _items;
+
     public List<Winkelwagenitem> Items { get; private set; }
 
-    
 
-  
-    public static readonly Winkelwagen Instance;
- 
-    // Wanneer de static class wordt gecalled wanneer deze wordt geladen
-    static Winkelwagen() {
-        // Als er nog geen winkelwagen bestaat, maak een nieuwe.
-        if (HttpContext.Current.Session["ASPNETShoppingCart"] == null) {
-            Instance = new Winkelwagen();
-            Instance.Items = new List<Winkelwagenitem>();
-            HttpContext.Current.Session["ASPNETShoppingCart"] = Instance;
-        } else {
-            Instance = (Winkelwagen)HttpContext.Current.Session["ASPNETShoppingCart"];
+    // The static constructor is called as soon as the class is loaded into memory 
+    public  static Winkelwagen GetShoppingCart()
+    {
+        // If the cart is not in the session, create one and put it there
+        if (HttpContext.Current.Session["ASPNETShoppingCart"] == null)
+        {
+            Winkelwagen cart = new Winkelwagen();
+            cart.Items = new List<Winkelwagenitem>();
+            HttpContext.Current.Session["ASPNETShoppingCart"] = cart;
         }
+
+        return (Winkelwagen)HttpContext.Current.Session["ASPNETShoppingCart"];
     }
-    protected Winkelwagen() { }
+
     /// <summary>
     /// Voeg een item toe aan de winkelwagen
     /// </summary>
@@ -62,6 +61,7 @@ public class Winkelwagen
             Items.Add(newItem);
         }
     }
+
 
     public void SetItemQuantity(int productId,int quantity)
     {

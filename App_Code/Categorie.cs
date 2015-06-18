@@ -10,8 +10,8 @@ public class Categorie
 {
     public string Titel { get; set; }
 
-	public Categorie(string titel)
+	public Categorie()
 	{
-	    Titel = titel;
+	   
 	}
 }

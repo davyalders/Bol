@@ -15,7 +15,7 @@ public partial class MasterPage : System.Web.UI.MasterPage
 {
     
     private DBC dbConnect;
-    private Winkelwagen winkelwagen;
+    
     public List<string> winkelwagens
     {
         get
@@ -31,6 +31,18 @@ public partial class MasterPage : System.Web.UI.MasterPage
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (Session["Login"] != null)
+        {
+            Account.Visible = false;
+            LoggedIn.Visible = true;
+        }
+
+        if (Session["Login"] == null)
+        {
+            Account.Visible = true;
+            LoggedIn.Visible = false;
+        }
+
         if (!this.IsPostBack)
         {
             this.GetMenuData();
@@ -120,6 +132,7 @@ public partial class MasterPage : System.Web.UI.MasterPage
     /// <param name="naam"></param> We geven de naam van het product mee.
     public void GetAanbevolen(string naam)
     {
+        dbConnect = new DBC();
         this.Session["Titel2"] = dbConnect.GetAanbevolenTitel(naam);
         this.Session["Prijs2"] = dbConnect.GetAanbevolenPrijs(naam);
     }
@@ -150,5 +163,14 @@ public partial class MasterPage : System.Web.UI.MasterPage
     protected void menuBar_MenuItemClick(object sender, MenuEventArgs e)
     {
 
+    }
+    protected void btnLogout_Click(object sender, EventArgs e)
+    {
+        Session["Login"] = null;
+        Response.Redirect("Default.aspx");
+    }
+    protected void Button1_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("AddProduct.aspx");
     }
 }

@@ -15,7 +15,7 @@ using Oracle.DataAccess.Client;
 /// </summary>
 public class DBC
 {
-    
+
     private OracleConnection conn;
     private String user = "System";
     private String pw = "klabnupac098";
@@ -23,7 +23,7 @@ public class DBC
     
 	public DBC()
 	{
-        
+	    
         conn = new OracleConnection();
         conn.ConnectionString = "User Id=" + user + ";Password=" + pw + ";Data Source= " +
                                 "//localhost:1521/xe" + ";";
@@ -184,11 +184,11 @@ public class DBC
         try
         {
             OracleDataReader reader1 =
-            Query("Select password from Account where gebruikersnaam='" + Username + "'");
+            Query("Select wachtwoord from Account where accountnaam='" + Username + "'");
 
             while (reader1.Read())
             {
-                wachtwoord = Convert.ToString(reader1["password"]);
+                wachtwoord = Convert.ToString(reader1["wachtwoord"]);
             }
             if (password == wachtwoord)
             {
@@ -350,6 +350,65 @@ public class DBC
             string sql = "insert into account values ('" + id + "','" + Username + "','" + Password + "','" + Email + "')";
             NonQuery(sql);
         
+    }
+    /// <summary>
+    /// Voegt een product toe aan de database
+    /// </summary>
+    /// <param name="naam">De naam van het product</param>
+    /// <param name="prijs">De prijs van het product</param>
+    /// <param name="gewicht"> Het gewicht van het product</param>
+    /// <param name="beschrijving"> De beschrijving van het product</param>
+    /// <param name="categorie"> De categorie van het product</param>
+     public void AddProduct(string naam, int prijs, int gewicht, string beschrijving, string categorie)
+     {
+         int id = 0;
+         int PCid = 0;
+         int catID = 0;
+         OracleDataReader reader1 = Query("select MAX(id_product)as id from product");
+         while (reader1.Read())
+         {
+             id = Convert.ToInt32(reader1["id"]);
+         }
+         Close();
+         id++;
+         string sql = "insert into product values ('" + id + "','" + naam + "','" + prijs + "','" + gewicht + "','"+beschrijving+"')";
+         NonQuery(sql);
+
+         string cat = categorie;
+         OracleDataReader reader2 = Query("select MAX(id_productcategorie)as id from productcategorie");
+          while (reader2.Read())
+         {
+             PCid = Convert.ToInt32(reader2["id"]);
+         }
+         Close();
+         OracleDataReader reader3 = Query("select id_categorie as id from categorie where titel ='"+ cat + "'");
+          while (reader3.Read())
+         {
+             catID = Convert.ToInt32(reader3["id"]);
+         }
+         Close();
+         PCid++;
+         catID++;
+         string sql2 = "insert into productcategorie values ('" + PCid + "','" + catID + "','" + id + "')";
+         NonQuery(sql2);
+     }
+
+    public List<Categorie> GetCategories()
+    {
+        List<Categorie> cat = new List<Categorie>();
+        string sql = "select titel from categorie where TOPCATEGORIE_ID_PARENT is null and id_categorie != 110";
+        OracleDataReader reader1 = Query(sql);
+        while (reader1.Read())
+        {
+            Categorie catt = new Categorie();
+            catt.Titel = Convert.ToString(reader1["titel"]);
+            cat.Add(catt);
+        }
+        Close();
+        return cat;
+
+
+
     }
     
 }
