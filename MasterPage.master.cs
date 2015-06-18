@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.Common;
+using System.Data.SqlClient;
 using System.EnterpriseServices;
 using System.Linq;
 using System.Web;
@@ -29,10 +31,19 @@ public partial class MasterPage : System.Web.UI.MasterPage
 
     protected void Page_Load(object sender, EventArgs e)
     {
-
-        this.winkelwagen = new Winkelwagen();
-        this.dbConnect = new DBC();
-        this.getMenu();
+        if (!this.IsPostBack)
+        {
+            this.getMenu();
+            this.winkelwagen = new Winkelwagen();
+            this.dbConnect = new DBC();
+        }
+        else
+        {
+            this.winkelwagen = new Winkelwagen();
+            this.dbConnect = new DBC();
+        }
+    
+        
     }
     /// <summary>
     /// Methode om dynamisch een menu op te halen
@@ -42,27 +53,29 @@ public partial class MasterPage : System.Web.UI.MasterPage
     /// </summary>
     private void getMenu()
     {
-        
-        this.dbConnect.Open();
+        DBC dbConnect = new DBC();
+        dbConnect.Open();
         DataSet ds = new DataSet();
         DataTable dt = new DataTable();
         string sql = "select * from categorie";
         OracleDataAdapter da = new OracleDataAdapter();
-        da = this.dbConnect.OracleDA(sql);
+        da = dbConnect.OracleDA(sql);
         da.Fill(ds);
         dt = ds.Tables[0];
-        DataRow[] drowpar = dt.Select("TOPCATEGORIE_ID_PARENT=null");
+        DataRow[] drowpar = dt.Select("TOPCATEGORIE_ID_PARENT is null or TOPCATEGORIE_ID_PARENT is not null");
 
         foreach (DataRow dr in drowpar)
         {
-            menuBar.Items.Add(new MenuItem(dr["Titel"].ToString()));
-                 
+            MenuItem mnu = new MenuItem(dr["Titel"].ToString());
+            Menu1.Items.Add(mnu);
+         
         }
-
-        this.dbConnect.Close();
-
+      dbConnect.Close();
+ 
+       
     }
-    /// <summary>
+
+   /// <summary>
     /// Hier halen we de titel op van een product en zetten hem in een session, hierdoor kunnen we de data op een andere pagina gebruiken.
     /// </summary>
     /// <param name="naam"></param> We geven de naam van het product mee.
@@ -79,6 +92,7 @@ public partial class MasterPage : System.Web.UI.MasterPage
         }
         dbConnect.Close();
     }
+
   
     /// <summary>
     /// Hier halen we de beschrijving op van een product en zetten hem in een session, hierdoor kunnen we de data op een andere pagina gebruiken. 

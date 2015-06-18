@@ -3,7 +3,7 @@
 
 
 <html>
-<head>
+<head runat="server">
      <asp:ContentPlaceHolder ID="Stylesheets" runat="server">
          <link rel="stylesheet" href="App_Themes/theme1/styles.css" type="text/css" />
     </asp:ContentPlaceHolder>
@@ -16,9 +16,9 @@
 <body>
     <form id="form1" runat="server">
     <div id ="Account">
-    <ul>
-<li><a href="Login.aspx">Login</a></li>
-<li><a href="Register.aspx">Register</a></li>
+    <ul class="lijstje">
+<li class="login"><a href="Login.aspx">Login</a></li>
+<li class ="login"><a href="Register.aspx">Register</a></li>
 
 </ul>
         </div>
@@ -38,16 +38,14 @@
 &nbsp;</h1>
     </div>
 
-       <div class="MenuBar">
-	<asp:Menu ID="menuBar" runat="server" Orientation="Horizontal" Width="100%" OnMenuItemClick="menuBar_MenuItemClick">
-		<DynamicHoverStyle CssClass="DynamicHover" />
-		<DynamicMenuItemStyle CssClass="DynamicMenuItem" />
-		<DynamicSelectedStyle CssClass="DynamicHover" />
-
-		<StaticHoverStyle CssClass="staticHover" />
-		<StaticMenuItemStyle CssClass="StaticMenuItem" ItemSpacing="1px" />
-		<StaticSelectedStyle CssClass="staticHover" />
-	</asp:Menu>
+       <div id="MenuBar">
+	<asp:Menu ID="Menu1" runat="server" Orientation="Horizontal">
+    <LevelMenuItemStyles>
+        <asp:MenuItemStyle CssClass="main_menu" />
+        <asp:MenuItemStyle CssClass="level_menu" />
+    </LevelMenuItemStyles>
+    <StaticSelectedStyle CssClass="selected" />
+</asp:Menu>
 </div>
 
 <asp:ContentPlaceHolder id="CPH1" runat="server">
