@@ -9,12 +9,94 @@ using Oracle.DataAccess.Client;
 /// </summary>
 public class Winkelwagen
 {
-    public int WinkelwagenId { get; set; }
+  
+    public List<Winkelwagenitem> Items { get; private set; }
 
-    public Winkelwagen(int id)
-    {
-        WinkelwagenId = id;
-    }
+    
 
   
+    public static readonly Winkelwagen Instance;
+ 
+    // Wanneer de static class wordt gecalled wanneer deze wordt geladen
+    static Winkelwagen() {
+        // Als er nog geen winkelwagen bestaat, maak een nieuwe.
+        if (HttpContext.Current.Session["ASPNETShoppingCart"] == null) {
+            Instance = new Winkelwagen();
+            Instance.Items = new List<Winkelwagenitem>();
+            HttpContext.Current.Session["ASPNETShoppingCart"] = Instance;
+        } else {
+            Instance = (Winkelwagen)HttpContext.Current.Session["ASPNETShoppingCart"];
+        }
+    }
+    protected Winkelwagen() { }
+    /// <summary>
+    /// Voeg een item toe aan de winkelwagen
+    /// </summary>
+    /// <param name="productId">ID van het product</param>
+    /// <param name="naam">Productnaam</param>
+    /// <param name="prijs">Productprijs</param>
+    /// <param name="gewicht">Gewicht in kg</param>
+    /// <param name="beschrijving">Beschrijving van het product</param>
+    /// <param name="categorie">Categorie van het product</param>
+    public void AddItem(int productId)
+    {
+        // Maak een nieuw product om in de winkelwagen te stoppen
+        Winkelwagenitem newItem = new Winkelwagenitem(productId);
+
+        // Als dit item al bestaat in de lijst, verhoog dan de Quantitiy
+        // Zo niet, voeg het dan toe aan de lijst.
+        if (Items.Contains(newItem))
+        {
+            foreach (Winkelwagenitem item in Items)
+            {
+                if (item.Equals(newItem))
+                {
+                    item.Quantity++;
+                    return;
+                }
+            }
+        }
+        else
+        {
+            newItem.Quantity = 1;
+            Items.Add(newItem);
+        }
+    }
+
+    public void SetItemQuantity(int productId,int quantity)
+    {
+        // If we are setting the quantity to 0, remove the item entirely
+        if (quantity == 0)
+        {
+            RemoveItem(productId);
+            return;
+        }
+
+        // Find the item and update the quantity
+        Winkelwagenitem updatedItem = new Winkelwagenitem(productId);
+
+        foreach (Winkelwagenitem item in Items)
+        {
+            if (item.Equals(updatedItem))
+            {
+                item.Quantity = quantity;
+                return;
+            }
+        }
+    }
+
+    public void RemoveItem(int productId) {
+        Winkelwagenitem removedItem = new Winkelwagenitem(productId);
+        Items.Remove(removedItem);
+    
+    }
+
+    public decimal GetSubTotal()
+    {
+        decimal subTotal = 0;
+        foreach (Winkelwagenitem item in Items)
+            subTotal += item.TotalPrice;
+
+        return subTotal;
+    }
 }

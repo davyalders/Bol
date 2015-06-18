@@ -33,6 +33,7 @@ public partial class GobletOfFire : System.Web.UI.Page
 
     protected void btnAddToCart_Click(object sender, EventArgs e)
     {
-
+        Winkelwagen.Instance.AddItem(1);
+        Response.Redirect("Winkelwagen.aspx");
     }
 }

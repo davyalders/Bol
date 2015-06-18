@@ -15,7 +15,9 @@ public class Product
     public string Beschrijving { get; set; }
     public Categorie Categorie { get; set; }
 
-	public Product(int id_product, string naam, int prijs, int gewicht, string beschrijving, Categorie categorie)
+
+
+    public Product(int id_product, string naam, int prijs, int gewicht, string beschrijving, Categorie categorie)
 	{
 	    Id_Product = id_product;
 	    Naam = naam;
@@ -24,6 +26,11 @@ public class Product
 	    Beschrijving = beschrijving;
 	    Categorie = categorie;
 	}
+
+    public Product(int id_product)
+    {
+        
+    }
     
     
 

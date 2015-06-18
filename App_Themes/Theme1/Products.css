@@ -81,3 +81,17 @@ margin-top: -132px; /*half height*/
 font-family: 'Lato', sans-serif;
 }
 
+.container {
+position: absolute;
+left: 50%;
+top: 35%;
+text-align: left;
+width: 600px;
+
+height:265px;
+margin-left: -273px; /*half width*/
+margin-top: -132px; /*half height*/
+font-family: 'Lato', sans-serif;
+}
+
+

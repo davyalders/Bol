@@ -11,7 +11,7 @@ public partial class Register : System.Web.UI.Page
     private Administratie Administratie;
     protected void Page_Load(object sender, EventArgs e)
     {
-        Administratie = new Account();
+        ;
     }
 
     /// <summary>

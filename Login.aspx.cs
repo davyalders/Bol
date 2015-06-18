@@ -38,7 +38,7 @@ public partial class Login : System.Web.UI.Page
             string username = tbUsername.Text;
             string password = tbPassword.Text;
             dbConnect.LogIn(username, password);
-            if (dbConnect.LogIn(username, password);)
+            if (dbConnect.LogIn(username, password))
             {
                 this.Session["Login"] = tbUsername.Text;
                 Response.Redirect("Default.aspx");

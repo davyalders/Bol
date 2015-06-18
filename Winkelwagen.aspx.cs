@@ -14,4 +14,19 @@ public partial class Winkelwagen : System.Web.UI.Page
 
         
     }
+
+    protected void btnUpdateCart_Click(object sender, EventArgs e)
+    {
+    
+    }
+
+    protected void gvShoppingCart_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+
+    }
+
+    protected void gvShoppingCart_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+       
+    }
 }

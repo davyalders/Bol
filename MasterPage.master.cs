@@ -34,12 +34,12 @@ public partial class MasterPage : System.Web.UI.MasterPage
         if (!this.IsPostBack)
         {
             this.GetMenuData();
-            this.winkelwagen = new Winkelwagen();
+
             this.dbConnect = new DBC();
         }
         else
         {
-            this.winkelwagen = new Winkelwagen();
+           
             this.dbConnect = new DBC();
         } 
     }
@@ -49,6 +49,7 @@ public partial class MasterPage : System.Web.UI.MasterPage
     /// </summary>
     private void GetMenuData()
     {
+        DBC dbConnect = new DBC();
         dbConnect.Open();
         DataTable dt = new DataTable();
         string sql = "select * from categorie";
@@ -110,7 +111,7 @@ public partial class MasterPage : System.Web.UI.MasterPage
     /// <param name="naam"></param> We geven de naam van het product mee.
     public void GetPrijs(string naam)
     {
-            this.Session["Prijs"] = dbConnect.GetPrijs();
+            this.Session["Prijs"] = dbConnect.GetPrijs(naam);
 
     }
     /// <summary>
