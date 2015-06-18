@@ -28,7 +28,6 @@ public partial class VforVendetta : System.Web.UI.Page
     }
     protected void btnAddToCart_Click(object sender, EventArgs e)
     {
-        MasterPage master = (MasterPage)this.Master;
-        master.AddToWinkelwagen((string)Session["Titel"]);
+
     }
 }

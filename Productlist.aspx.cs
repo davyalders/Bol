@@ -4,14 +4,11 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Oracle.DataAccess.Client;
 
-public partial class Winkelwagen : System.Web.UI.Page
+public partial class Productlist : System.Web.UI.Page
 {
-   
     protected void Page_Load(object sender, EventArgs e)
     {
 
-        
     }
 }

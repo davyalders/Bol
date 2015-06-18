@@ -39,7 +39,7 @@
     </div>
 
        <div id="MenuBar">
-	<asp:Menu ID="Menu1" runat="server" Orientation="Horizontal">
+	<asp:Menu ID="Menu1" runat="server" Orientation="Vertical" staticEnableDefaultPopOutImage= "False">
     <LevelMenuItemStyles>
         <asp:MenuItemStyle CssClass="main_menu" />
         <asp:MenuItemStyle CssClass="level_menu" />

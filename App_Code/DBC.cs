@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
+using System.ServiceModel.Security.Tokens;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -170,4 +171,185 @@ public class DBC
 
 
     }
+    /// <summary>
+    /// Controleerd de gegevens inde database
+    /// </summary>
+    /// <param name="Username">Gebruikersnaam</param>
+    /// <param name="password">Wachtwoord</param>
+    /// <returns> Return true wanneer de data klopt</returns>
+    public bool LogIn(string Username, string password)
+    {
+        bool waar = false;
+        string wachtwoord = string.Empty;
+        try
+        {
+            OracleDataReader reader1 =
+            Query("Select password from Account where gebruikersnaam='" + Username + "'");
+
+            while (reader1.Read())
+            {
+                wachtwoord = Convert.ToString(reader1["password"]);
+            }
+            if (password == wachtwoord)
+            {
+                waar = true;
+            }
+        }
+        catch (Exception)
+        {
+            return false;
+            
+        }
+      
+        Close();
+        return waar;
+    }
+    /// <summary>
+    /// Haalt de titel op van meegegeven string
+    /// </summary>
+    /// <param name="naam"></param>
+    /// <returns>Returned de titel</returns>
+    public string GetTitel(string naam)
+    {
+        string titel = string.Empty;
+       
+        OracleDataReader reader1 = Query("Select * from Product where naam ='" + naam + "'");
+
+        while (reader1.Read())
+        {
+            titel = Convert.ToString(reader1["Naam"]);
+        }
+        Close();
+        return titel;
+    }
+    /// <summary>
+    /// Haalt de beschrijving op van meegegeven string
+    /// </summary>
+    /// <param name="naam"></param>
+    /// <returns>Returned de beschrijving</returns>
+    public string GetBeschrijving(string naam)
+    {
+        string beschrijving = string.Empty;
+        OracleDataReader reader1 = Query("Select * from Product where naam ='" + naam + "'");
+
+        while (reader1.Read())
+        {
+           beschrijving =Convert.ToString(reader1["Beschrijving"]);
+        }
+       Close();
+        return beschrijving;
+    }
+
+    /// <summary>
+    /// Haalt de Prijs op van meegegeven string
+    /// </summary>
+    /// <param name="naam"></param>
+    /// <returns>Returned de prijs</returns>
+    public string GetPrijs(string naam)
+    {
+        string prijs = string.Empty;
+        OracleDataReader reader1 = Query("Select * from Product where naam ='" + naam + "'");
+
+        while (reader1.Read())
+        {
+            prijs = Convert.ToString(reader1["Prijs"]) + ",00";
+        }
+        Close();
+        return prijs;
+    }
+
+    public string GetAanbevolenPrijs(string naam)
+    {
+        string id = string.Empty;
+        string aanbevolenID = string.Empty;
+        string prijs = string.Empty;
+        string sql = "Select * from Product where naam ='" + naam + "'";
+        OracleDataReader reader1 = Query(sql);
+
+        while (reader1.Read())
+        {
+            id = Convert.ToString(reader1["ID_product"]);
+
+        }
+        Close();
+
+        OracleDataReader reader2 = Query("Select * from Aanbevolen where ID_product1 ='" + id + "'");
+
+        while (reader2.Read())
+        {
+            aanbevolenID = Convert.ToString(reader2["ID_product2"]);
+
+        }
+        Close();
+
+        OracleDataReader reader3 = Query("Select * from Product where ID_product ='" + aanbevolenID + "'");
+
+        while (reader3.Read())
+        {
+            prijs = Convert.ToString(reader3["Prijs"]) + ",00";
+        }
+       Close();
+        return prijs;
+    }
+
+    public string GetAanbevolenTitel(string naam)
+    {
+        string id = string.Empty;
+        string aanbevolenID = string.Empty;
+        string titel = string.Empty;
+        string sql = "Select * from Product where naam ='" + naam + "'";
+        OracleDataReader reader1 = Query(sql);
+
+        while (reader1.Read())
+        {
+            id = Convert.ToString(reader1["ID_product"]);
+
+        }
+        Close();
+
+        OracleDataReader reader2 = Query("Select * from Aanbevolen where ID_product1 ='" + id + "'");
+
+        while (reader2.Read())
+        {
+            aanbevolenID = Convert.ToString(reader2["ID_product2"]);
+
+        }
+        Close();
+
+        OracleDataReader reader3 = Query("Select * from Product where ID_product ='" + aanbevolenID + "'");
+
+        while (reader3.Read())
+        {
+            titel = Convert.ToString(reader3["Naam"]);
+        }
+        Close();
+        return titel;
+    }
+    /// <summary>
+    /// Voegt een nieuwe account toe aan de database
+    /// </summary>
+    /// <param name="username"> Gebruikersnaam</param>
+    /// <param name="password">Wachtwoord</param>
+    /// <param name="email">Email</param>
+     public void NewAccount(string username, string password, string email)
+    {
+       
+        int id = 0;
+         string Username = username;
+         string Password = password;
+         string Email = email;
+     
+            OracleDataReader reader1 =Query("select MAX(id_account)as id from account");
+
+            while (reader1.Read())
+            {
+                id = Convert.ToInt32(reader1["id"]);
+            }
+            Close();
+            id++;
+            string sql = "insert into account values ('" + id + "','" + Username + "','" + Password + "','" + Email + "')";
+            NonQuery(sql);
+        
+    }
+    
 }

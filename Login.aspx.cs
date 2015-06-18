@@ -10,27 +10,13 @@ using System.Web.UI.WebControls;
 /// </summary>
 public partial class Login : System.Web.UI.Page
 {
-    /// <summary>
-    /// De pagina controleerd de connectie wanneer deze wordt geladen.
-    /// </summary>
-    /// <param name="sender">parameter s</param>
-    /// <param name="e">Parameter e</param>
+    private DBC dbConnect;
     protected void Page_Load(object sender, EventArgs e)
     {
-        DBC dbConnect = new DBC();
-    
-        // test de database connectie
-       if (dbConnect.CheckConnection())
-        {
-           Response.Write("database connection succesful");
-        }
-       else
-       {
-           Response.Write("database connection failed");
-       }
+        dbConnect = new DBC();
     }
 
-/// <summary>
+    /// <summary>
 /// Roept de login methode aan om in te loggen.
 /// </summary>
 /// <param name="sender">parameter s</param>
@@ -45,17 +31,14 @@ public partial class Login : System.Web.UI.Page
     /// Wanneer dit klopt wordt er verwezen naar de homepage.
     /// </summary> 
     protected void LogIn()
-    {   
-        DBC dbConnect = new DBC();
+    {
         if (this.IsValid)
         {
-            if (tbUsername.Text != null)
-            {
-                dbConnect.Query("Select password from Account where gebruikersnaam='" + tbUsername.Text + "'");
-            }
-
-            dbConnect.Close();
-            if (tbPassword.Text != null)
+           
+            string username = tbUsername.Text;
+            string password = tbPassword.Text;
+            dbConnect.LogIn(username, password);
+            if (dbConnect.LogIn(username, password);)
             {
                 this.Session["Login"] = tbUsername.Text;
                 Response.Redirect("Default.aspx");

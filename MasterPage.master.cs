@@ -24,7 +24,7 @@ public partial class MasterPage : System.Web.UI.MasterPage
         }
         set
         {
-            this.Session["WinkelwagenList"] = value;
+            Session["WinkelwagenList"] = value;
         }
     }
 
@@ -33,7 +33,7 @@ public partial class MasterPage : System.Web.UI.MasterPage
     {
         if (!this.IsPostBack)
         {
-            this.getMenu();
+            this.GetMenuData();
             this.winkelwagen = new Winkelwagen();
             this.dbConnect = new DBC();
         }
@@ -41,38 +41,49 @@ public partial class MasterPage : System.Web.UI.MasterPage
         {
             this.winkelwagen = new Winkelwagen();
             this.dbConnect = new DBC();
-        }
-    
-        
+        } 
     }
+
     /// <summary>
-    /// Methode om dynamisch een menu op te halen
-    /// Eerst gaan we de database in, halen we een categorie tabel op en zetten we deze in een datarow.
-    /// Hierna lezen we deze datarow uit en zetten we de items in de Menubar.
-    /// WERKT OP DIT MOMENT NIET
+    /// Laad het menu uit de database, zet het in een table en haal de data daar uit om een lijst mee te maken.
     /// </summary>
-    private void getMenu()
+    private void GetMenuData()
     {
-        DBC dbConnect = new DBC();
         dbConnect.Open();
-        DataSet ds = new DataSet();
         DataTable dt = new DataTable();
         string sql = "select * from categorie";
         OracleDataAdapter da = new OracleDataAdapter();
         da = dbConnect.OracleDA(sql);
-        da.Fill(ds);
-        dt = ds.Tables[0];
-        DataRow[] drowpar = dt.Select("TOPCATEGORIE_ID_PARENT is null or TOPCATEGORIE_ID_PARENT is not null");
-
-        foreach (DataRow dr in drowpar)
+        da.Fill(dt);
+        DataView view = new DataView(dt);
+        view.RowFilter = "TOPCATEGORIE_ID_PARENT is NULL";
+        foreach (DataRowView row in view)
         {
-            MenuItem mnu = new MenuItem(dr["Titel"].ToString());
-            Menu1.Items.Add(mnu);
-         
+            MenuItem menuItem = new MenuItem(row["Titel"].ToString(),
+            row["ID_categorie"].ToString());
+            menuItem.NavigateUrl = row["URL"].ToString();
+            Menu1.Items.Add(menuItem);
+            AddChildItems(dt, menuItem);
         }
-      dbConnect.Close();
- 
-       
+        dbConnect.Close();
+    }
+    /// <summary>
+    /// Hier kijken we welke categorie bij welke parent hoort.
+    /// </summary>
+    /// <param name="table"> De table waar het in staat</param>
+    /// <param name="menuItem"> het Item dat we gaan vergelijken</param>
+    private void AddChildItems(DataTable table, MenuItem menuItem)
+    {
+        DataView viewItem = new DataView(table);
+        viewItem.RowFilter = "TOPCATEGORIE_ID_PARENT=" + menuItem.Value;
+        foreach (DataRowView childView in viewItem)
+        {
+            MenuItem childItem = new MenuItem(childView["Titel"].ToString(),
+            childView["ID_Categorie"].ToString());
+            childItem.NavigateUrl = childView["URL"].ToString();
+            menuItem.ChildItems.Add(childItem);
+            AddChildItems(table, childItem);
+        }
     }
 
    /// <summary>
@@ -81,16 +92,7 @@ public partial class MasterPage : System.Web.UI.MasterPage
     /// <param name="naam"></param> We geven de naam van het product mee.
     public void GetTitel(string naam)
     {
-
-        DBC dbConnect = new DBC();
-        OracleDataReader reader1 = dbConnect.Query("Select * from Product where naam ='" + naam + "'");
-
-        while (reader1.Read())
-        {
-            this.Session["Titel"] = Convert.ToString(reader1["Naam"]);
-     
-        }
-        dbConnect.Close();
+        this.Session["Titel"] = dbConnect.GetTitel(naam);
     }
 
   
@@ -100,15 +102,7 @@ public partial class MasterPage : System.Web.UI.MasterPage
     /// <param name="naam"></param> We geven de naam van het product mee.
     public void GetBeschrijving(string naam)
     {
-        DBC dbConnect = new DBC();
-        OracleDataReader reader1 = dbConnect.Query("Select * from Product where naam ='" + naam + "'");
-
-        while (reader1.Read())
-        {
-            this.Session["Beschrijving"] = Convert.ToString(reader1["Beschrijving"]);
-
-        }
-        dbConnect.Close();
+        this.Session["Beschrijving"] = dbConnect.GetBeschrijving(naam);
     }
     /// <summary>
     /// Hier halen we de prijs op van een product en zetten hem in een session, hierdoor kunnen we de data op een andere pagina gebruiken.
@@ -116,15 +110,8 @@ public partial class MasterPage : System.Web.UI.MasterPage
     /// <param name="naam"></param> We geven de naam van het product mee.
     public void GetPrijs(string naam)
     {
-        DBC dbConnect = new DBC();
-        OracleDataReader reader1 = dbConnect.Query("Select * from Product where naam ='" + naam + "'");
+            this.Session["Prijs"] = dbConnect.GetPrijs();
 
-        while (reader1.Read())
-        {
-            this.Session["Prijs"] = Convert.ToString(reader1["Prijs"]) + ",00";
-
-        }
-        dbConnect.Close();
     }
     /// <summary>
     /// Hier halen we het aanbevolen product op en zetten hem in een session, hierdoor kunnen we de data op een andere pagina gebruiken.
@@ -132,36 +119,8 @@ public partial class MasterPage : System.Web.UI.MasterPage
     /// <param name="naam"></param> We geven de naam van het product mee.
     public void GetAanbevolen(string naam)
     {
-        DBC dbConnect = new DBC();
-        string id = string.Empty;
-        string aanbevolenID = string.Empty;
-        string sql = "Select * from Product where naam ='" + naam + "'";
-        OracleDataReader reader1 = dbConnect.Query(sql);
-
-        while (reader1.Read())
-        {
-           id = Convert.ToString(reader1["ID_product"]);
-
-        }
-        dbConnect.Close();
-
-        OracleDataReader reader2 = dbConnect.Query("Select * from Aanbevolen where ID_product1 ='" + id + "'");
-
-        while (reader2.Read())
-        {
-            aanbevolenID = Convert.ToString(reader2["ID_product2"]);
-
-        }
-        dbConnect.Close();
-
-        OracleDataReader reader3 = dbConnect.Query("Select * from Product where ID_product ='" + aanbevolenID + "'");
-
-        while (reader3.Read())
-        {
-            this.Session["Titel2"] = Convert.ToString(reader3["Naam"]);
-            this.Session["Prijs2"] = Convert.ToString(reader3["Prijs"]) + ",00";
-        }
-        dbConnect.Close();
+        this.Session["Titel2"] = dbConnect.GetAanbevolenTitel(naam);
+        this.Session["Prijs2"] = dbConnect.GetAanbevolenPrijs(naam);
     }
 
  
@@ -171,11 +130,12 @@ public partial class MasterPage : System.Web.UI.MasterPage
 
     protected void btnZoek_Click1(object sender, EventArgs e)
     {
-         string naam = tbZoek.Text;
+        string naam = tbZoek.Text;
         this.GetTitel(naam);
         this.GetBeschrijving(naam);
         this.GetPrijs(naam);
         this.GetAanbevolen(naam);
+
         if ((string)Session["Titel"] == "Harry potter : The Goblet of Fire")
         {
             Response.Redirect("GobletOfFire.aspx");
@@ -189,34 +149,5 @@ public partial class MasterPage : System.Web.UI.MasterPage
     protected void menuBar_MenuItemClick(object sender, MenuEventArgs e)
     {
 
-    }
-    /// <summary>
-    /// Haalt de data van winkelwagen op uit de klasse winkelwagen en geeft hem door aan de web page.
-    /// </summary>
-    /// <returns></returns> Geeft een lijst terug van poducten als string.
-    public void GetWinkelWagen()
-    {
-        try
-        {
-            
-           
-
-        }
-        catch (Exception)
-        {       
-          Response.Write("Winkelwagen is leeg");
-      
-        }
-        
-    }
-    /// <summary>
-    /// Geeft aan de winkelwagan klasse door welk product moet worden toegevoegd aan de lijst.
-    /// </summary>
-    /// <param name="product"></param> Het product dat moet worden toegevoegd.
-    public void AddToWinkelwagen(string product)
-    {
-
-        this.winkelwagens.Add(product);
-     
     }
 }
