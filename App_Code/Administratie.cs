@@ -1,20 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Web;
 
 /// <summary>
-/// Summary description for Administratie
+///     Summary description for Administratie
 /// </summary>
 public class Administratie
 {
-    DBC dbConnect = new DBC();
-    public List<Categorie> CategorieList = new List<Categorie>(); 
-	public Administratie()
-	{
-		
-	}
+    private readonly DBC dbConnect = new DBC();
+    public List<Categorie> CategorieList = new List<Categorie>();
+    public List<Product> Products = new List<Product>(); 
 
     public void AddAccount(string username, string password, string email)
     {
@@ -23,13 +17,18 @@ public class Administratie
 
     public void AddProduct(string naam, int prijs, int gewicht, string beschrijving, string categorie)
     {
-        dbConnect.AddProduct(naam, prijs, gewicht,beschrijving,categorie);
+        dbConnect.AddProduct(naam, prijs, gewicht, beschrijving, categorie);
     }
 
-    public List<Categorie> GetCategories()
+    public void GetCategories()
     {
         CategorieList = dbConnect.GetCategories();
-       return CategorieList;
+        
     }
-    
+
+    public void GetProducten( string categorie)
+    {
+        Products = dbConnect.GetProductsCategorie(categorie);
+        
+    }
 }

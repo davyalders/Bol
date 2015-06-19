@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 using System.ServiceModel.Security.Tokens;
 using System.Web;
@@ -392,7 +393,10 @@ public class DBC
          string sql2 = "insert into productcategorie values ('" + PCid + "','" + catID + "','" + id + "')";
          NonQuery(sql2);
      }
-
+    /// <summary>
+    /// Haal de lijst met hoofdcategorien op.
+    /// </summary>
+    /// <returns>Returned de opgehaalde lijst.</returns>
     public List<Categorie> GetCategories()
     {
         List<Categorie> cat = new List<Categorie>();
@@ -406,9 +410,47 @@ public class DBC
         }
         Close();
         return cat;
+    }
+    /// <summary>
+    /// Haalt de producten die bij een categorie horen op
+    /// </summary>
+    /// <param name="categorie"> De gewenste categorie</param>
+    /// <returns>Geeft een lijst van producten</returns>
+    public List<Product> GetProductsCategorie(string categorie)
+    {
+        List<Product> products = new List<Product>();
+        int idproduct = 0;
+        int idcat = 0;
+        string sql3 = "select id_categorie from categorie where titel ='" + categorie + "'";
+        OracleDataReader reader3 = Query(sql3);
+        while (reader3.Read())
+        {
+            idcat = Convert.ToInt32(reader3["id_categorie"]);
+        }
+        Close();
 
+        string sql2 = "select id_product from productcategorie where id_categorie = '" + idcat + "'";
+        OracleDataReader reader2 = Query(sql2);
+        while (reader2.Read())
+        {
+            idproduct = Convert.ToInt32(reader2["id_product"]);
+        }
+        Close();
 
-
+        string sql =
+            "select product.id_product, product.naam, product.prijs, product.gewichtkg, product.beschrijving from product where product.id_product = '" + idproduct + "'";
+        OracleDataReader reader1 = Query(sql);
+        while (reader1.Read())
+        {
+            Product pro = new Product();
+            pro.Id_Product = Convert.ToInt32(reader1["id_product"]);
+            pro.Naam = Convert.ToString(reader1["naam"]);
+            pro.Gewicht = Convert.ToInt32(reader1["gewichtkg"]);
+            pro.Beschrijving = Convert.ToString(reader1["beschrijving"]);
+            products.Add(pro);
+        }
+        Close();
+        return products;
     }
     
 }

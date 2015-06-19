@@ -1,15 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-/// <summary>
-/// Summary description for Winkelwagenitem
+﻿/// <summary>
+///     Summary description for Winkelwagenitem
 /// </summary>
 public class Winkelwagenitem
 {
-    public int Quantity { get; set; }
+    private Product _product;
     private int _productId;
+
+    public Winkelwagenitem(int productId)
+    {
+        ProductId = productId;
+    }
+
+    public int Quantity { get; set; }
 
     public int ProductId
     {
@@ -21,7 +23,7 @@ public class Winkelwagenitem
             _productId = value;
         }
     }
-    private Product _product = null;
+
     public Product Prod
     {
         get
@@ -34,6 +36,7 @@ public class Winkelwagenitem
             return _product;
         }
     }
+
     public string Description
     {
         get { return Prod.Beschrijving; }
@@ -46,10 +49,6 @@ public class Winkelwagenitem
 
     public decimal TotalPrice
     {
-        get { return UnitPrice * Quantity; }
+        get { return UnitPrice*Quantity; }
     }
-    public Winkelwagenitem(int productId)
-	{
-        this.ProductId = productId;
-	}
 }

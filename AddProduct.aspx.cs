@@ -13,6 +13,7 @@ public partial class AddProduct : System.Web.UI.Page
        
         administratie = new Administratie();
         administratie.GetCategories();
+        DropDownList1.Items.Clear();
         foreach (Categorie cat in administratie.CategorieList)
         {
             DropDownList1.Items.Add(Convert.ToString(cat.Titel));

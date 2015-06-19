@@ -15,6 +15,7 @@ public partial class MasterPage : System.Web.UI.MasterPage
 {
     
     private DBC dbConnect;
+    private Administratie administratie;
     
     public List<string> winkelwagens
     {
@@ -31,6 +32,7 @@ public partial class MasterPage : System.Web.UI.MasterPage
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        administratie = new Administratie();
         if (Session["Login"] != null)
         {
             Account.Visible = false;
@@ -74,7 +76,7 @@ public partial class MasterPage : System.Web.UI.MasterPage
         {
             MenuItem menuItem = new MenuItem(row["Titel"].ToString(),
             row["ID_categorie"].ToString());
-            menuItem.NavigateUrl = row["URL"].ToString();
+
             Menu1.Items.Add(menuItem);
             AddChildItems(dt, menuItem);
         }
@@ -172,5 +174,13 @@ public partial class MasterPage : System.Web.UI.MasterPage
     protected void Button1_Click(object sender, EventArgs e)
     {
         Response.Redirect("AddProduct.aspx");
+    }
+
+  
+    protected void Menu1_MenuItemClick(object sender, MenuEventArgs e)
+    {
+        Session["Select"] = Menu1.SelectedItem.Text;
+        Response.Redirect("Productlist.aspx");
+    
     }
 }
