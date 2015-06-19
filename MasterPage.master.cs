@@ -162,25 +162,34 @@ public partial class MasterPage : System.Web.UI.MasterPage
         }
     
     }
-    protected void menuBar_MenuItemClick(object sender, MenuEventArgs e)
-    {
-
-    }
+  /// <summary>
+  /// Hier log je uit en zet je de session op null
+  /// </summary>
+  /// <param name="sender"></param>
+  /// <param name="e"></param>
     protected void btnLogout_Click(object sender, EventArgs e)
     {
         Session["Login"] = null;
         Response.Redirect("Default.aspx");
     }
+    /// <summary>
+    /// Hier word je geredirect naar de pagina om er een te koop te zetten.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     protected void Button1_Click(object sender, EventArgs e)
     {
         Response.Redirect("AddProduct.aspx");
     }
 
-  
+  /// <summary>
+  /// Hier wordt wanneer er op het menu wordt geklikt een session aangemaakt en geredirect naar de productenlijst die bij de categorie hoort.
+  /// </summary>
+  /// <param name="sender"></param>
+  /// <param name="e"></param>
     protected void Menu1_MenuItemClick(object sender, MenuEventArgs e)
     {
         Session["Select"] = Menu1.SelectedItem.Text;
         Response.Redirect("Productlist.aspx");
-    
     }
 }

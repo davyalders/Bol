@@ -8,6 +8,11 @@ using System.Web.UI.WebControls;
 public partial class AddProduct : System.Web.UI.Page
 {
     private Administratie administratie;
+    /// <summary>
+    /// Wanneer de pagina wordt geladen vullen we de dropdown list
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     protected void Page_Load(object sender, EventArgs e)
     {
        
@@ -22,14 +27,21 @@ public partial class AddProduct : System.Web.UI.Page
     }
 
 
-
+    /// <summary>
+    /// Hier wanneer je op de knop drukt ga je een product aan de database toeveoegen
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     protected void Button1_Click(object sender, EventArgs e)
     {
-        int prijs = Convert.ToInt32(tbPrijs.Text);
-        int gewicht = Convert.ToInt32(tbGewicht.Text);
-        string cat = DropDownList1.SelectedValue;
-        Administratie administratie = new Administratie();
+        if (IsValid)
+        {
+            int prijs = Convert.ToInt32(tbPrijs.Text);
+            int gewicht = Convert.ToInt32(tbGewicht.Text);
+            string cat = DropDownList1.SelectedValue;
+            Administratie administratie = new Administratie();
 
-        administratie.AddProduct(tbProductNaam.Text,prijs, gewicht, tbBeschrijving.Text, cat);
+            administratie.AddProduct(tbProductNaam.Text, prijs, gewicht, tbBeschrijving.Text, cat);
+        }
     }
 }

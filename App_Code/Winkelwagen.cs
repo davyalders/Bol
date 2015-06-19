@@ -5,7 +5,7 @@ using System.Web;
 using Oracle.DataAccess.Client;
 
 /// <summary>
-/// Dit is een klasse die wordt gebruike om de winkelwagendata op te slaan of op te halen
+/// Dit is een klasse die wordt gebruikt om de winkelwagendata op te slaan of op te halen
 /// </summary>
 public class Winkelwagen
 {

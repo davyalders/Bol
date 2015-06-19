@@ -1,5 +1,5 @@
 ﻿/// <summary>
-///     Summary description for VerkoopAccount
+///     Dit is een subklasse van Account
 /// </summary>
 public class VerkoopAccount : Account
 {

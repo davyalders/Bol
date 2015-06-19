@@ -4,7 +4,7 @@
 <asp:Content ID="Content3" ContentPlaceHolderID="CPH1" Runat="Server">
     <div id="ListProducts">
     
-        <asp:ListBox ID="lbProducts" runat="server" Height="260px" Width="208px"></asp:ListBox>
+        <asp:ListBox ID="lbProducts" runat="server" Height="408px" Width="229px"></asp:ListBox>
     
     </div>
 </asp:Content>

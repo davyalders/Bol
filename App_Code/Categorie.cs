@@ -1,5 +1,5 @@
 ﻿/// <summary>
-///     Summary description for Categorie
+///  Hier houden we de categorien bij
 /// </summary>
 public class Categorie
 {

@@ -1,5 +1,5 @@
 ﻿/// <summary>
-///     Summary description for AcountNormaal
+///   Dit is een subklasse van Account
 /// </summary>
 public class AcountNormaal : Account
 {

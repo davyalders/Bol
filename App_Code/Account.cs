@@ -1,5 +1,5 @@
 ﻿/// <summary>
-///     Summary description for Account
+///    Deze klasse houdt de account data bij.
 /// </summary>
 public abstract class Account
 {

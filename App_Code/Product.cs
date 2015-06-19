@@ -1,5 +1,5 @@
 ﻿/// <summary>
-///     Summary description for Product
+///     Hier houden we de product data bij.
 /// </summary>
 public class Product
 {
@@ -21,6 +21,6 @@ public class Product
 
     public override string ToString()
     {
-        return Naam + " € " + Prijs;
+        return Naam;
     }
 }

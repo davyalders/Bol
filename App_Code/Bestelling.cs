@@ -1,7 +1,7 @@
 ﻿using System;
 
 /// <summary>
-///     Summary description for Bestelling
+///    Hier houden we de data van een bestelling bij.
 /// </summary>
 public class Bestelling
 {

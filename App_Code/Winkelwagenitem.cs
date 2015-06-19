@@ -1,5 +1,5 @@
 ﻿/// <summary>
-///     Summary description for Winkelwagenitem
+///     Hier maken we items om in de winkelwagen te stoppen
 /// </summary>
 public class Winkelwagenitem
 {
