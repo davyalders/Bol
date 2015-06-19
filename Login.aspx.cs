@@ -17,10 +17,10 @@ public partial class Login : System.Web.UI.Page
     }
 
     /// <summary>
-/// Roept de login methode aan om in te loggen.
-/// </summary>
-/// <param name="sender">parameter s</param>
-/// <param name="e">parameter e</param>
+    /// Roept de login methode aan om in te loggen.
+    /// </summary>
+    /// <param name="sender">parameter s</param>
+    /// <param name="e">parameter e</param>
     protected void btnLogin_Click(object sender, EventArgs e)
     {
         this.LogIn();

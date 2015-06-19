@@ -4,56 +4,66 @@
 
 <html>
 <head runat="server">
-     <asp:ContentPlaceHolder ID="Stylesheets" runat="server">
-         <link rel="stylesheet" href="App_Themes/theme1/styles.css" type="text/css" />
+    <asp:ContentPlaceHolder ID="Stylesheets" runat="server">
+        <link rel="stylesheet" href="App_Themes/theme1/styles.css" type="text/css"/>
     </asp:ContentPlaceHolder>
-     <asp:ContentPlaceHolder ID="StyleProducts" runat="server">
-         <link rel="stylesheet" href="App_Themes/theme1/products.css" type="text/css" />
+
+    <asp:ContentPlaceHolder ID="StyleProducts" runat="server">
+        <link rel="stylesheet" href="App_Themes/theme1/products.css" type="text/css"/>
     </asp:ContentPlaceHolder
-         >
+    >
     <title></title>
 </head>
 <body>
-    <form id="form1" runat="server">
-    <div id ="Account" runat="server">
-    <ul class="lijstje">
-<li class="login"><a href="Login.aspx">Login</a></li>
-<li class ="login"><a href="Register.aspx">Register</a></li>
+<form id="form1" runat="server">
+    <div id="Account" runat="server">
+        <ul class="lijstje">
+            <li class="login">
+                <a href="Login.aspx">Login</a>
+            </li>
+            <li class="login">
+                <a href="Register.aspx">Register</a>
+            </li>
 
-</ul>
-        </div>
-        <div id ="LoggedIn" runat="server">
-            <asp:Button CssClass="btnLogout" runat="server" OnClick="Button1_Click" Text="Verkoop Item" />
-          <asp:Button CssClass="btnLogout" runat="server" Text="Log out" OnClick="btnLogout_Click" />
-        </div>
+        </ul>
+    </div>
+    <div id="LoggedIn" runat="server">
+        <asp:Button CssClass="btnLogout" runat="server" OnClick="Button1_Click" Text="Verkoop Item"/>
+        <asp:Button CssClass="btnLogout" runat="server" Text="Log out" OnClick="btnLogout_Click"/>
+    </div>
     <div id="HomePic">
-        <a href="Default.aspx"> <img src="App_Themes/Theme1/Image/Bolhome.jpg" alt="Home" /></a>      
+        <a href="Default.aspx">
+            <img src="App_Themes/Theme1/Image/Bolhome.jpg" alt="Home"/>
+        </a>
     </div>
-    <div id="Search">   
+    <div id="Search">
         <asp:TextBox ID="tbZoek" runat="server"></asp:TextBox>
-        <asp:Button ID="btnZoek" runat="server" Text="Zoeken" OnClick="btnZoek_Click1" />      
+        <asp:Button ID="btnZoek" runat="server" Text="Zoeken" OnClick="btnZoek_Click1"/>
     </div>
 
-    <div id ="cartimg">
+    <div id="cartimg">
         <h1>
-   <a href="Winkelwagen.aspx">  <img src="App_Themes/Theme1/Image/shopping cart.png" alt="Home" /> </a>
-&nbsp;</h1>
+            <a href="Winkelwagen.aspx">
+                <img src="App_Themes/Theme1/Image/shopping cart.png" alt="Home"/>
+            </a>
+            &nbsp;
+        </h1>
     </div>
 
-       <div id="MenuBar">
-	<asp:Menu ID="Menu1" runat="server" Orientation="Vertical" staticEnableDefaultPopOutImage= "False" OnMenuItemClick="Menu1_MenuItemClick">
-    <LevelMenuItemStyles>
-        <asp:MenuItemStyle CssClass="main_menu" />
-        <asp:MenuItemStyle CssClass="level_menu" />
-    </LevelMenuItemStyles>
-    <StaticSelectedStyle CssClass="selected" />
-</asp:Menu>
-</div>
+    <div id="MenuBar">
+        <asp:Menu ID="Menu1" runat="server" Orientation="Vertical" staticEnableDefaultPopOutImage="False" OnMenuItemClick="Menu1_MenuItemClick">
+            <LevelMenuItemStyles>
+                <asp:MenuItemStyle CssClass="main_menu"/>
+                <asp:MenuItemStyle CssClass="level_menu"/>
+            </LevelMenuItemStyles>
+            <StaticSelectedStyle CssClass="selected"/>
+        </asp:Menu>
+    </div>
 
-<asp:ContentPlaceHolder id="CPH1" runat="server">
-</asp:ContentPlaceHolder>
-<asp:ContentPlaceHolder id="CPH2" runat="server">
-</asp:ContentPlaceHolder>
-    </form>
+    <asp:ContentPlaceHolder id="CPH1" runat="server">
+    </asp:ContentPlaceHolder>
+    <asp:ContentPlaceHolder id="CPH2" runat="server">
+    </asp:ContentPlaceHolder>
+</form>
 </body>
 </html>
