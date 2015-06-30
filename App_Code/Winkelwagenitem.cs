@@ -36,17 +36,23 @@ public class Winkelwagenitem
             return _product;
         }
     }
-
+    /// <summary>
+    /// Beschrijving
+    /// </summary>
     public string Description
     {
         get { return Prod.Beschrijving; }
     }
-
+    /// <summary>
+    /// Prijs per unit
+    /// </summary>
     public decimal UnitPrice
     {
         get { return Prod.Prijs; }
     }
-
+    /// <summary>
+    /// Totaalprijs
+    /// </summary>
     public decimal TotalPrice
     {
         get { return UnitPrice*Quantity; }

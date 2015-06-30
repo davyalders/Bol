@@ -258,7 +258,11 @@ public class DBC
         Close();
         return prijs;
     }
-
+    /// <summary>
+    /// Haalt de prijs op van het aanbevolen product
+    /// </summary>
+    /// <param name="naam">Naam van het product</param>
+    /// <returns> Geeft een prijs terug</returns>
     public string GetAanbevolenPrijs(string naam)
     {
         string id = string.Empty;
@@ -292,7 +296,11 @@ public class DBC
        Close();
         return prijs;
     }
-
+    /// <summary>
+    /// Haalt de naam op van het aanbevolen product
+    /// </summary>
+    /// <param name="naam">Vaam van het huidige product</param>
+    /// <returns>Geeft een titel terug</returns>
     public string GetAanbevolenTitel(string naam)
     {
         string id = string.Empty;

@@ -14,10 +14,11 @@ public class Winkelwagen
     public List<Winkelwagenitem> Items { get; private set; }
 
 
-    // The static constructor is called as soon as the class is loaded into memory 
+    // Static constructor
     public  static Winkelwagen GetShoppingCart()
     {
-        // If the cart is not in the session, create one and put it there
+        
+        // Als de cart nog niet in de sessie zit, maak er een aan.
         if (HttpContext.Current.Session["ASPNETShoppingCart"] == null)
         {
             Winkelwagen cart = new Winkelwagen();
@@ -62,17 +63,21 @@ public class Winkelwagen
         }
     }
 
-
+    /// <summary>
+    /// Zet de quantiteit van een item
+    /// </summary>
+    /// <param name="productId"> ID van het product</param>
+    /// <param name="quantity"> De quantiteit</param>
     public void SetItemQuantity(int productId,int quantity)
     {
-        // If we are setting the quantity to 0, remove the item entirely
+        // Als de quantity naar 0 gaat, verwijder het dan.
         if (quantity == 0)
         {
             RemoveItem(productId);
             return;
         }
 
-        // Find the item and update the quantity
+        // Vind en update de quantiteit
         Winkelwagenitem updatedItem = new Winkelwagenitem(productId);
 
         foreach (Winkelwagenitem item in Items)
@@ -84,13 +89,19 @@ public class Winkelwagen
             }
         }
     }
-
+    /// <summary>
+    /// Verwijder een item
+    /// </summary>
+    /// <param name="productId"> Id van het product</param>
     public void RemoveItem(int productId) {
         Winkelwagenitem removedItem = new Winkelwagenitem(productId);
         Items.Remove(removedItem);
     
     }
-
+    /// <summary>
+    /// Tel de prijs op
+    /// </summary>
+    /// <returns>Geeft het subtotaal terug</returns>
     public decimal GetSubTotal()
     {
         decimal subTotal = 0;

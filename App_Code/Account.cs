@@ -16,3 +16,4 @@ public abstract class Account
     public string Wachtwoord { get; set; }
     public string Email { get; set; }
 }
+
